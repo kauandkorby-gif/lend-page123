@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — FROTA FUTURISTA</title>
+    <style>
+        * {margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif;}
+        body {background:#050508; color:#fff; min-height:100vh; display:flex; align-items:center; justify-content:center;}
+        .card {background:#0c0c14; border:2px solid #ffd700; border-radius:16px; padding:30px; width:100%; max-width:400px; box-shadow:0 0 30px rgba(255,215,0,0.2);}
+        h2 {color:#ffd700; text-align:center; margin-bottom:25px;}
+        input {width:100%; padding:14px; margin:10px 0; background:#080810; border:1px solid #ffd700; border-radius:10px; color:#fff; font-size:16px;}
+        .btn {width:100%; padding:14px; background:linear-gradient(90deg,#ffd700,#ff9500); border:none; border-radius:10px; font-weight:bold; font-size:16px; cursor:pointer; color:#000; margin-top:10px;}
+        .aviso {padding:12px; border-radius:10px; margin:10px 0; text-align:center; font-weight:bold;}
+        .aviso.erro {background:rgba(255,77,77,0.2); color:#ff6b6b; border:1px solid #ff4d4d;}
+        .aviso.sucesso {background:rgba(0,255,150,0.2); color:#00ff96; border:1px solid #00ff96;}
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>🔐 PAINEL ADMINISTRATIVO</h2>
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% if mensagens %}
+                {% for cat, txt in mensagens %}
+                    <div class="aviso {{ cat }}">{{ txt }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form method="POST">
+            <label style="color:#ffd700;">Senha do Administrador</label>
+            <input type="password" name="senha" placeholder="Digite a senha..." required>
+            <button type="submit" class="btn">Entrar</button>
+        </form>
+        <p style="text-align:center; margin-top:20px; font-size:13px; color:#666;">
+            <a href="{{ url_for('login') }}" style="color:#00ffff;">← Voltar ao site</a>
+        </p>
+    </div>
+</body>
+</html>

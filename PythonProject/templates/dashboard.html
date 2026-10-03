@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+<a href="{{ url_for('caminhoes') }}" class="voltar">← Voltar à Frota</a>
+<h2 class="titulo">📊 Painel — {{ nome }}</h2>
+
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:15px; margin-bottom:20px;">
+    <div class="card" style="text-align:center;">
+        <p class="etiqueta">Saldo Disponível</p>
+        <p class="destaque verde">R$ {{ "%.2f"|format(saldo) }}</p>
+    </div>
+    <div class="card" style="text-align:center;">
+        <p class="etiqueta">Total Investido</p>
+        <p class="destaque" style="color:#00f0ff;">R$ {{ "%.2f"|format(total_investido) }}</p>
+    </div>
+    <div class="card" style="text-align:center;">
+        <p class="etiqueta">Rendimento Diário</p>
+        <p class="destaque" style="color:#ffd700;">+R$ {{ "%.2f"|format(rend_diario) }}</p>
+    </div>
+    <div class="card" style="text-align:center;">
+        <p class="etiqueta">Rendimento Mensal</p>
+        <p class="destaque" style="color:#ff9500;">+R$ {{ "%.2f"|format(rend_mensal) }}</p>
+    </div>
+</div>
+
+<div class="card">
+    <h3 style="margin-bottom:15px;">🚛 Meus Investimentos</h3>
+    {% if investimentos %}
+        {% for inv in investimentos %}
+        <div style="padding:12px 0; border-bottom:1px solid rgba(0,240,255,0.1);">
+            <p style="font-weight:600; color:#00f0ff;">{{ inv.nome }}</p>
+            <p style="font-size:14px; color:#9fa8da;">Aplicado: R$ {{ "%.2f"|format(inv.valor) }}</p>
+            <p style="font-size:14px; color:#ffd700;">⏰ +R$ {{ "%.2f"|format(inv.rendimento_diario) }}/dia</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p style="color:#556090;">Nenhum investimento ainda. <a href="{{ url_for('caminhoes') }}" style="color:#00f0ff;">Escolha um caminhão</a> para começar!</p>
+    {% endif %}
+</div>
+
+{% endblock %}{% extends "base.html" %}
+{% block conteudo %}
+
+<a href="{{ url_for('caminhoes') }}" class="voltar">← Voltar à Frota</a>
+<h2 class="titulo">📊 Painel — {{ nome }}</h2>
+
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:15px; margin-bottom:20px;">
+    <div class="card" style="text-align:center;">
+        <p class="etiqueta">Saldo Disponível</p>
+        <p class="destaque verde">R$ {{ "%.2f"|format(saldo) }}</p>
+    </div>
+    <div class="card" style="text-align:center;">
+        <p class="etiqueta">Total Investido</p>
+        <p class="destaque" style="color:#00f0ff;">R$ {{ "%.2f"|format(total_investido) }}</p>
+    </div>
+    <div class="card" style="text-align:center;">
+        <p class="etiqueta">Rendimento Diário</p>
+        <p class="destaque" style="color:#ffd700;">+R$ {{ "%.2f"|format(rend_diario) }}</p>
+    </div>
+    <div class="card" style="text-align:center;">
+        <p class="etiqueta">Rendimento Mensal</p>
+        <p class="destaque" style="color:#ff9500;">+R$ {{ "%.2f"|format(rend_mensal) }}</p>
+    </div>
+</div>
+
+<div class="card">
+    <h3 style="margin-bottom:15px;">🚛 Meus Investimentos</h3>
+    {% if investimentos %}
+        {% for inv in investimentos %}
+        <div style="padding:12px 0; border-bottom:1px solid rgba(0,240,255,0.1);">
+            <p style="font-weight:600; color:#00f0ff;">{{ inv.nome }}</p>
+            <p style="font-size:14px; color:#9fa8da;">Aplicado: R$ {{ "%.2f"|format(inv.valor) }}</p>
+            <p style="font-size:14px; color:#ffd700;">⏰ +R$ {{ "%.2f"|format(inv.rendimento_diario) }}/dia</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p style="color:#556090;">Nenhum investimento ainda. <a href="{{ url_for('caminhoes') }}" style="color:#00f0ff;">Escolha um caminhão</a> para começar!</p>
+    {% endif %}
+</div>
+
+{% endblock %}

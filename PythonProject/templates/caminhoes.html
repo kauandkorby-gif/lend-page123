@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h2 class="titulo">🚛 10 Caminhões Disponíveis</h2>
+<p style="color:#7b87b3; margin-bottom:25px;">Escolha e renda cai direto no saldo</p>
+
+{% for caminhao in frota %}
+<div class="card" style="overflow:hidden;">
+    <img src="{{ caminhao.imagem }}" alt="{{ caminhao.nome }}" class="img-caminhao" loading="lazy">
+    <h3 style="color:#00ffff; font-size:20px; margin-bottom:10px;">{{ caminhao.nome }}</h3>
+    <p style="color:#fff; margin-bottom:5px;">💵 Investimento: <strong>R$ {{ "%.2f"|format(caminhao.valor) }}</strong></p>
+    <p style="color:#ffd700; margin-bottom:15px;">💰 Renda diária: <strong>+R$ {{ "%.2f"|format(caminhao.renda_diaria) }}</strong></p>
+    <a href="{{ url_for('investir', veiculo_id=caminhao.id) }}" style="display:block; text-align:center; padding:12px; background:linear-gradient(90deg,#00ff96,#00cc78); color:#000; border-radius:10px; text-decoration:none; font-weight:bold;">✅ Investir Agora</a>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<div style="max-width:420px; margin:30px auto;">
+    <div style="display:flex; margin-bottom:20px;">
+        <button type="button" id="abaCriar" class="aba ativo" onclick="trocarAba('criar')">📝 Criar Conta</button>
+        <button type="button" id="abaEntrar" class="aba" onclick="trocarAba('entrar')">🔐 Entrar</button>
+    </div>
+
+    <div id="formCriar" class="card">
+        <h3 style="margin-bottom:20px; color:#00ffff;">Conta Nova</h3>
+        <form method="POST">
+            <input type="hidden" name="acao" value="criar">
+            <label class="etiqueta">Nome Completo</label>
+            <input type="text" name="nome" required>
+            <label class="etiqueta">E-mail</label>
+            <input type="email" name="email" required>
+            <label class="etiqueta">Chave PIX</label>
+            <input type="text" name="chave_pix" required>
+            <label class="etiqueta">Senha</label>
+            <input type="password" name="senha" required>
+            <button type="submit" class="btn btn-verde">✅ Criar Conta</button>
+        </form>
+    </div>
+
+    <div id="formEntrar" class="card" style="display:none;">
+        <h3 style="margin-bottom:20px; color:#00ffff;">Acessar</h3>
+        <form method="POST">
+            <input type="hidden" name="acao" value="entrar">
+            <label class="etiqueta">E-mail</label>
+            <input type="email" name="email" required>
+            <label class="etiqueta">Senha</label>
+            <input type="password" name="senha" required>
+            <button type="submit" class="btn btn-verde">➡️ Entrar</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .aba {flex:1; padding:12px; border:none; background:transparent; color:#7b87b3; cursor:pointer; border-bottom:2px solid transparent; font-weight:600; font-size:16px;}
+    .aba.ativo {color:#00ffff; border-bottom-color:#00ffff; background:rgba(0,255,255,0.05);}
+</style>
+
+<script>
+function trocarAba(aba) {
+    const formCriar = document.getElementById('formCriar');
+    const formEntrar = document.getElementById('formEntrar');
+    const abaCriar = document.getElementById('abaCriar');
+    const abaEntrar = document.getElementById('abaEntrar');
+    if (aba === 'criar') {
+        formCriar.style.display = 'block'; formEntrar.style.display = 'none';
+        abaCriar.classList.add('ativo'); abaEntrar.classList.remove('ativo');
+    } else {
+        formCriar.style.display = 'none'; formEntrar.style.display = 'block';
+        abaCriar.classList.remove('ativo'); abaEntrar.classList.add('ativo');
+    }
+}
+</script>
+{% endblock %}

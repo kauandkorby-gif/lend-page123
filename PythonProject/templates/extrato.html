@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<a href="{{ url_for('painel') }}" class="voltar">← Voltar</a>
+<h2 class="titulo">📋 Extrato — {{ nome }}</h2>
+
+<div class="grid" style="margin-bottom:20px;">
+    <div class="card" style="text-align:center;">
+        <p class="etiqueta">Saldo Atual</p>
+        <p class="destaque verde">R$ {{ "%.2f"|format(saldo) }}</p>
+    </div>
+    <div class="card" style="text-align:center;">
+        <p class="etiqueta">Total Entradas</p>
+        <p class="destaque verde">+R$ {{ "%.2f"|format(total_entradas) }}</p>
+    </div>
+    <div class="card" style="text-align:center;">
+        <p class="etiqueta">Total Saídas</p>
+        <p class="destaque vermelho">-R$ {{ "%.2f"|format(total_saidas) }}</p>
+    </div>
+</div>
+
+{% if saques_pendentes %}
+<div class="card" style="border-color:#ffd700; background:rgba(255,215,0,0.05);">
+    <h3 style="color:#ffd700; margin-bottom:15px;">⏳ SAQUES PENDENTES</h3>
+    {% for s in saques_pendentes %}
+    <div class="linha">
+        <p style="font-weight:600;">Saque #{{ s.id_saque }}</p>
+        <p style="color:#ffd700;">Valor: R$ {{ "%.2f"|format(s.valor) }}</p>
+        <p style="font-size:13px; color:#7b87b3;">Solicitado em: {{ s.data_solicitacao }}</p>
+        <p style="color:#ffd700; margin-top:5px;">⏳ Aguardando aprovação</p>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="card">
+    <h3 style="color:#00ff96; margin-bottom:15px;">📥 ENTRADAS</h3>
+    {% for m in extrato %}
+        {% if m.tipo == 'entrada' %}
+        <div class="linha">
+            <small style="color:#7b87b3;">{{ m.data }}</small>
+            <div style="display:flex; justify-content:space-between; margin-top:4px;">
+                <span>{{ m.texto }}</span>
+                <span style="color:#00ff96; font-weight:bold;">+R$ {{ "%.2f"|format(m.valor) }}</span>
+            </div>
+        </div>
+        {% endif %}
+    {% else %}
+    <p style="color:#556090;">Sem registros</p>
+    {% endfor %}
+</div>
+
+<div class="card" style="margin-top:20px;">
+    <h3 style="color:#ff6b6b; margin-bottom:15px;">📤 SAÍDAS</h3>
+    {% for m in extrato %}
+        {% if m.tipo == 'saida' %}
+        <div class="linha">
+            <small style="color:#7b87b3;">{{ m.data }}</small>
+            <div style="display:flex; justify-content:space-between; margin-top:4px;">
+                <span>{{ m.texto }}</span>
+                <span style="color:#ff6b6b; font-weight:bold;">-R$ {{ "%.2f"|format(m.valor) }}</span>
+            </div>
+        </div>
+        {% endif %}
+    {% else %}
+    <p style="color:#556090;">Sem registros</p>
+    {% endfor %}
+</div>
+{% endblock %}

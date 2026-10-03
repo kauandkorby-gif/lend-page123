@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprovar Saques — Admin</title>
+    <style>
+        * {margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif;}
+        body {background:#050508; color:#fff; padding:30px; max-width:1000px; margin:0 auto;}
+        h1 {color:#ffd700; margin-bottom:5px;}
+        .sub {color:#7b87b3; margin-bottom:25px;}
+        .card {background:#0c0c14; border:1px solid rgba(255,215,0,0.2); border-radius:16px; padding:20px; margin-bottom:15px;}
+        .linha {display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;}
+        .dados p {margin:5px 0;}
+        .valor {font-size:22px; font-weight:bold; color:#ffd700;}
+        .botoes {display:flex; gap:10px; margin-top:10px;}
+        .btn-aprov {padding:10px 20px; background:linear-gradient(90deg,#00ff96,#00cc78); border:none; border-radius:8px; font-weight:bold; cursor:pointer; color:#000;}
+        .btn-negar {padding:10px 20px; background:linear-gradient(90deg,#ff4d4d,#cc3333); border:none; border-radius:8px; font-weight:bold; cursor:pointer; color:#fff;}
+        .vazio {text-align:center; padding:40px; color:#556; font-size:18px;}
+        .aviso {padding:15px; border-radius:10px; margin:15px 0; font-weight:bold; text-align:center;}
+        .aviso.sucesso {background:rgba(0,255,150,0.15); color:#00ff96; border:1px solid #00ff96;}
+        .aviso.erro {background:rgba(255,77,77,0.15); color:#ff6b6b; border:1px solid #ff4d4d;}
+        .sair {text-align:right; margin-bottom:20px;}
+        .sair a {color:#ff6b6b; text-decoration:none;}
+    </style>
+</head>
+<body>
+    <div class="sair"><a href="{{ url_for('admin_sair') }}">🚪 Sair do Admin</a></div>
+
+    <h1>⚙️ APROVAR SAQUES</h1>
+    <p class="sub">Veja todos os saques solicitados pelos usuários</p>
+
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+        {% if mensagens %}
+            {% for cat, txt in mensagens %}
+                <div class="aviso {{ cat }}">{{ txt }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if saques %}
+        {% for s in saques %}
+        <div class="card">
+            <div class="linha">
+                <div class="dados">
+                    <p><strong>Nome:</strong> {{ s.nome_usuario }}</p>
+                    <p><strong>E-mail:</strong> {{ s.email_usuario }}</p>
+                    <p><strong>Chave PIX:</strong> {{ s.chave_pix }}</p>
+                    <p><strong>Data:</strong> {{ s.data_solicitacao }}</p>
+                </div>
+                <div>
+                    <p class="valor">R$ {{ "%.2f"|format(s.valor) }}</p>
+                </div>
+            </div>
+            <div class="botoes">
+                <form method="POST" action="{{ url_for('admin_aprovar') }}">
+                    <input type="hidden" name="email_usuario" value="{{ s.email_usuario }}">
+                    <input type="hidden" name="id_saque" value="{{ s.id_saque }}">
+                    <button type="submit" class="btn-aprov">✅ APROVAR</button>
+                </form>
+                <form method="POST" action="{{ url_for('admin_negar') }}">
+                    <input type="hidden" name="email_usuario" value="{{ s.email_usuario }}">
+                    <input type="hidden" name="id_saque" value="{{ s.id_saque }}">
+                    <button type="submit" class="btn-negar">❌ NEGAR</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="vazio">✅ Nenhum saque pendente no momento</div>
+    {% endif %}
+</body>
+</html>

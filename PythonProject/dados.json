@@ -1,0 +1,42 @@
+{
+    "kauandkorby@gmail.com": {
+        "nome": "alessandro",
+        "chave_pix": "032475954144",
+        "senha": "123456",
+        "saldo": 245678654051.0,
+        "investimentos": [
+            {
+                "nome": "Volvo FH 540",
+                "valor": 50.0,
+                "renda_diaria": 3.0
+            },
+            {
+                "nome": "Volvo FH 540",
+                "valor": 50.0,
+                "renda_diaria": 3.0
+            }
+        ],
+        "extrato": [],
+        "saques_pendentes": [
+            {
+                "id_saque": 1,
+                "valor": 24.0,
+                "data_solicitacao": "03/10/2026 03:42",
+                "status": "aprovado"
+            },
+            {
+                "id_saque": 2,
+                "valor": 2000.0,
+                "data_solicitacao": "03/10/2026 03:43",
+                "status": "aprovado"
+            },
+            {
+                "id_saque": 3,
+                "valor": 26.0,
+                "data_solicitacao": "03/10/2026 03:43",
+                "status": "aprovado"
+            }
+        ],
+        "ultima_renda": "03/10/2026"
+    }
+}

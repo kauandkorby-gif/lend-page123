@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<a href="{{ url_for('painel') }}" class="voltar">← Voltar</a>
+<h2 class="titulo">💰 Financeiro</h2>
+
+<div class="card">
+    <p class="etiqueta">Saldo Disponível</p>
+    <p class="destaque verde" id="saldo">R$ {{ "%.2f"|format(saldo) }}</p>
+    {% if qtd_pendentes > 0 %}
+    <p style="margin-top:10px; color:#ffd700;">⚠️ Você tem {{ qtd_pendentes }} saque(s) aguardando aprovação</p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h3 style="color:#00ff96; margin-bottom:15px;">📥 DEPÓSITO</h3>
+    <form method="POST">
+        <label class="etiqueta">Valor</label>
+        <input type="text" name="valor" placeholder="0,00" required>
+        <button type="submit" name="depositar" class="btn btn-verde">✅ Depositar</button>
+    </form>
+</div>
+
+<div class="card">
+    <h3 style="color:#ff6b6b; margin-bottom:15px;">📤 SOLICITAR SAQUE</h3>
+    <p style="color:#ffd700; font-size:14px; margin-bottom:15px;">⚠️ Mínimo: R$ {{ "%.2f"|format(saque_minimo) }} — Aguardará aprovação</p>
+    <form method="POST">
+        <label class="etiqueta">Valor do saque</label>
+        <input type="text" name="valor" placeholder="Mínimo R$ {{ "%.2f"|format(saque_minimo) }}" required>
+        <button type="submit" name="sacar" class="btn btn-vermelho">💸 Solicitar Saque PIX</button>
+    </form>
+</div>
+
+<script>
+setInterval(async () => {
+    const res = await fetch('/atualizar-dados');
+    const d = await res.json();
+    if (!d.erro) document.getElementById('saldo').textContent = 'R$ ' + d.saldo.toFixed(2);
+}, 3000);
+</script>
+{% endblock %}
